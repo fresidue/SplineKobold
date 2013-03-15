@@ -9,6 +9,8 @@
 #import "SimpleSplineLayer.h"
 
 
+#define test_commit
+
 #define INSET 5
 #define NUM_POINTS_RENDERED 100
 
