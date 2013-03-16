@@ -29,6 +29,7 @@
 #define IM_ADD  @"top-button-add.png"
 #define IM_DEL @"top-button-cancel.png"
 #define IM_PRINT @"top-button-print.png"
+#define IM_ARROW @"arrow.png"
 #define TOP_BUTTON_H 40
 #define TOP_BUTTON_W 47
 
@@ -37,6 +38,9 @@
 #define YELLOW_DARK_C3   ccc3(100,100,0)
 #define BLUE_C3          ccc3(0,0,200)
 #define BLUE_DARK_C3     ccc3(0,0,100);
+
+#define LAB_Y_OFFSET  -20
+#define BC_BUTT_SCALE 0.8
 
 CGPoint screenPtFromCurvePoint(CGPoint crvPt, CGPoint minCrv, CGPoint maxCrv, CGSize scrSz)
 {	
@@ -127,6 +131,26 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         topButtons.position = ccp(0,0);
         [self addChild:topButtons];
         
+        
+        // Add the bc-type stuff
+        CCSprite* arrNorR = [CCSprite spriteWithFile:IM_ARROW];
+        CCSprite* arrSelR = [CCSprite spriteWithFile:IM_ARROW];
+        arrSelR.color = GRAY_C3;
+        bcTypeNext = [CCMenuItemSprite itemWithNormalSprite:arrNorR selectedSprite:arrSelR target:self selector:@selector(topButtonPressed:)];
+        bcTypeNext.anchorPoint = ccp(0.5,0.5);
+        bcTypeNext.position = ccp(290,winsize.height-25);
+        bcTypeNext.scale = BC_BUTT_SCALE;
+        [topButtons addChild:bcTypeNext];
+        CCSprite* arrNorL = [CCSprite spriteWithFile:IM_ARROW];
+        CCSprite* arrSelL = [CCSprite spriteWithFile:IM_ARROW];
+        arrSelL.color = GRAY_C3;
+        bcTypePrev = [CCMenuItemSprite itemWithNormalSprite:arrNorL selectedSprite:arrSelL target:self selector:@selector(topButtonPressed:)];
+        bcTypePrev.anchorPoint = ccp(0.5,0.5);
+        bcTypePrev.position = ccp(170,winsize.height-25);
+        bcTypePrev.rotation = 180;
+        bcTypePrev.scale = BC_BUTT_SCALE;
+        [topButtons addChild:bcTypePrev];
+        
         numControlSpritesChanged = YES;
         controlPoints = [PointList pointListWithCapacity:3];
         [controlPoints addPoint:ccp(0,0)];
@@ -135,6 +159,8 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         [controlPoints addPoint:ccp(.8,.9)];
         [controlPoints addPoint:ccp(1,1)];
         bcType = bc_endpointsSlope0;
+        
+        [self updateLabelBC];
         
         minPt = ccp(0,-1);
         maxPt = ccp(1,1);
@@ -159,7 +185,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         NSString* coords = [NSString stringWithFormat:@"(%f,%f)",pt.x,pt.y];
         coordLabel = [CCLabelTTF labelWithString:coords fontName:@"Marker Felt" fontSize:13];
         coordLabel.anchorPoint = ccp(0,1);
-        coordLabel.position = CGPointMake(5,winsize.height-15);
+        coordLabel.position = CGPointMake(5,winsize.height+LAB_Y_OFFSET);
         coordLabel.color = ccWHITE;
         [self addChild:coordLabel];
     }
@@ -202,6 +228,44 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         CCLOG(@"  ");
         CCLOG(@"  ");
     }
+    
+    if ( sender == bcTypePrev || sender == bcTypeNext ) {
+        int diff = ( sender == bcTypePrev ? bc_num_types-1 : 1 );
+        bcType = ( bcType + diff ) % bc_num_types;
+        [self updateLabelBC];
+        [self updatePoints];
+    }
+}
+
+-(void)updateLabelBC {
+    
+    if ( bcTypeLabel ) {
+        [self removeChild:bcTypeLabel cleanup:YES];
+        bcTypeLabel = nil;
+    }
+    
+    NSString* bcStr;
+    if ( bcType == bc_endpointsCurve0 ) {
+        bcStr = @"BC: curve 0";
+    }
+    else if ( bcType == bc_endpointsSlope0 ) {
+        bcStr = @"BC: slope 0";
+    }
+    else if ( bcType == bc_endpointsSlopeCurveHarmonic ) {
+        bcStr = @"BC: harmonic";
+    }
+    else if ( bcType == bc_endsegmentsQuadratic ) {
+        bcStr = @"BC: quadratic";
+    }
+    else {
+        bcStr = @"BC: invalid";
+    }
+    
+    bcTypeLabel = [CCLabelTTF labelWithString:bcStr fontName:@"Marker Felt" fontSize:13];
+    bcTypeLabel.anchorPoint = ccp(0.5,1);
+    bcTypeLabel.position = ccp(0.5*(bcTypePrev.position.x+bcTypeNext.position.x),winsize.height + LAB_Y_OFFSET);
+    bcTypeLabel.color = ccWHITE;
+    [self addChild:bcTypeLabel];
 }
 
 

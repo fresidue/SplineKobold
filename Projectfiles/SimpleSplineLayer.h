@@ -15,6 +15,10 @@
     CCMenuItemSprite* delButton;
     CCMenuItemSprite* printButton;
     
+    CCMenuItemSprite* bcTypeNext;
+    CCMenuItemSprite* bcTypePrev;
+    CCLabelTTF* bcTypeLabel;
+    
     CCLabelTTF* coordLabel;
     
     CCNode* controlPointsNode;
