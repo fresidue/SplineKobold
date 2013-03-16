@@ -15,6 +15,8 @@
     CCMenuItemSprite* delButton;
     CCMenuItemSprite* printButton;
     
+    CCLabelTTF* coordLabel;
+    
     CCNode* controlPointsNode;
     PointList* controlPoints;
     CCSprite* currentControlSprite;

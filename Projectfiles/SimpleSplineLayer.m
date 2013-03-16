@@ -126,7 +126,6 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         CCMenu* topButtons = [CCMenu menuWithItems:printButton,addButton,delButton,nil];
         topButtons.position = ccp(0,0);
         [self addChild:topButtons];
-
         
         numControlSpritesChanged = YES;
         controlPoints = [PointList pointListWithCapacity:3];
@@ -145,6 +144,25 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         [self scheduleUpdate];
     }
     return self;
+}
+
+
+-(void)updateCoordLabel {
+    
+    if ( coordLabel ) {
+        [self removeChild:coordLabel cleanup:YES];
+        coordLabel = nil;
+    }
+    
+    if ( currentControlSprite ) {
+        CGPoint pt = [controlPoints pointAtIndex:currentControlSprite.tag];
+        NSString* coords = [NSString stringWithFormat:@"(%f,%f)",pt.x,pt.y];
+        coordLabel = [CCLabelTTF labelWithString:coords fontName:@"Marker Felt" fontSize:13];
+        coordLabel.anchorPoint = ccp(0,1);
+        coordLabel.position = CGPointMake(5,winsize.height-15);
+        coordLabel.color = ccWHITE;
+        [self addChild:coordLabel];
+    }
 }
 
 
@@ -226,6 +244,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
             sp.tag = i;
         }
     }
+    [self updateCoordLabel];
         
     for (int i=0; i<NUM_POINTS_RENDERED+1; i++) {
         
@@ -272,6 +291,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
                     break;
                 }
             }
+            [self updateCoordLabel];
         }
         
         if (touch.phase == KKTouchPhaseMoved || touch.phase == KKTouchPhaseStationary) {
