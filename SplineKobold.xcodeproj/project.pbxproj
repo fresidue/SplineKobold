@@ -19,11 +19,8 @@
 		5C05D03E16F2A8A400291B09 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C05D03D16F2A8A400291B09 /* OpenGLES.framework */; };
 		5C05D04016F2A8C800291B09 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C05D03F16F2A8C800291B09 /* QuartzCore.framework */; };
 		5C05D04216F2A8DD00291B09 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C05D04116F2A8DD00291B09 /* CoreGraphics.framework */; };
-		5C0A671A16F3C35E0023329C /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A671916F3C35E0023329C /* red.png */; };
 		5C0A671D16F3C4150023329C /* top-button-add.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A671C16F3C4150023329C /* top-button-add.png */; };
 		5C0A671F16F3C4210023329C /* top-button-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A671E16F3C4210023329C /* top-button-cancel.png */; };
-		5C0A672316F3FDCA0023329C /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A672116F3FDCA0023329C /* green.png */; };
-		5C0A672416F3FDCA0023329C /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A672216F3FDCA0023329C /* yellow.png */; };
 		5C0A672616F3FF220023329C /* white_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A672516F3FF220023329C /* white_dot.png */; };
 		5C0A672816F417540023329C /* top-button-print.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A672716F417540023329C /* top-button-print.png */; };
 		5C0A672A16F498A00023329C /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A672916F498A00023329C /* arrow.png */; };
@@ -92,11 +89,8 @@
 		5C05D03D16F2A8A400291B09 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		5C05D03F16F2A8C800291B09 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		5C05D04116F2A8DD00291B09 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		5C0A671916F3C35E0023329C /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		5C0A671C16F3C4150023329C /* top-button-add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-button-add.png"; sourceTree = "<group>"; };
 		5C0A671E16F3C4210023329C /* top-button-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-button-cancel.png"; sourceTree = "<group>"; };
-		5C0A672116F3FDCA0023329C /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
-		5C0A672216F3FDCA0023329C /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
 		5C0A672516F3FF220023329C /* white_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white_dot.png; sourceTree = "<group>"; };
 		5C0A672716F417540023329C /* top-button-print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-button-print.png"; sourceTree = "<group>"; };
 		5C0A672916F498A00023329C /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -217,9 +211,6 @@
 			children = (
 				5C0A672916F498A00023329C /* arrow.png */,
 				5C05D03A16F29B0D00291B09 /* whitePixel.png */,
-				5C0A671916F3C35E0023329C /* red.png */,
-				5C0A672116F3FDCA0023329C /* green.png */,
-				5C0A672216F3FDCA0023329C /* yellow.png */,
 				5C0A672516F3FF220023329C /* white_dot.png */,
 				5C0A671C16F3C4150023329C /* top-button-add.png */,
 				5C0A671E16F3C4210023329C /* top-button-cancel.png */,
@@ -455,11 +446,8 @@
 				DC65618915114C8500E59F8A /* fps_images-ipadhd.png in Resources */,
 				DC272199160CA63900D88944 /* Default-568h@2x.png in Resources */,
 				5C05D03B16F29B0D00291B09 /* whitePixel.png in Resources */,
-				5C0A671A16F3C35E0023329C /* red.png in Resources */,
 				5C0A671D16F3C4150023329C /* top-button-add.png in Resources */,
 				5C0A671F16F3C4210023329C /* top-button-cancel.png in Resources */,
-				5C0A672316F3FDCA0023329C /* green.png in Resources */,
-				5C0A672416F3FDCA0023329C /* yellow.png in Resources */,
 				5C0A672616F3FF220023329C /* white_dot.png in Resources */,
 				5C0A672816F417540023329C /* top-button-print.png in Resources */,
 				5C0A672A16F498A00023329C /* arrow.png in Resources */,

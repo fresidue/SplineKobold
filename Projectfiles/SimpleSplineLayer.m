@@ -362,6 +362,10 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
             
             if ( currentControlSprite ) {
                 CGPoint curvePt = curvePtFromScreenPoint(touchPt, minPt, maxPt, effectiveSize);
+                curvePt.x = max(curvePt.x, minPt.x);
+                curvePt.x = min(curvePt.x, maxPt.x);
+                curvePt.y = max(curvePt.y, minPt.y);
+                curvePt.y = min(curvePt.y, maxPt.y);
                 currentControlSprite.position = touchPt;
                 [controlPoints replacePointAtIndex:currentControlSprite.tag withPoint:curvePt];
                 
