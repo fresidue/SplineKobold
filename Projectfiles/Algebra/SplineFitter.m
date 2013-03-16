@@ -156,20 +156,20 @@
             break;
     }
     
-    for (int i=0; i<matDim; i++) {
-        
-        NSString* str = ( i==0 ? @"[  " : @"   " );
-        for (int j=0; j<matDim; j++) {
-            float val = [splineMatrix valueInRow:i column:j];
-            float sign = (val<0?-1:1);
-            int int1 = (int)(val*sign);
-            int int2 = (int)(100*val) - 100*int1*(int)sign;
-            int2 *= (int)sign;
-            str = [str stringByAppendingFormat:@"  %@ %@%d.%d %@",(j==0 ? @"[" : @" "), ( val<0 ? @"-" : @" " )  ,int1,int2,(j==matDim-1? @"  ]" : @",")];
-        }
-        str = [str stringByAppendingFormat:( i==matDim-1 ? @"   ]" : @"" )];
-        NSLog(@"%@",str);
-    }
+//    for (int i=0; i<matDim; i++) {
+//        
+//        NSString* str = ( i==0 ? @"[  " : @"   " );
+//        for (int j=0; j<matDim; j++) {
+//            float val = [splineMatrix valueInRow:i column:j];
+//            float sign = (val<0?-1:1);
+//            int int1 = (int)(val*sign);
+//            int int2 = (int)(100*val) - 100*int1*(int)sign;
+//            int2 *= (int)sign;
+//            str = [str stringByAppendingFormat:@"  %@ %@%d.%d %@",(j==0 ? @"[" : @" "), ( val<0 ? @"-" : @" " )  ,int1,int2,(j==matDim-1? @"  ]" : @",")];
+//        }
+//        str = [str stringByAppendingFormat:( i==matDim-1 ? @"   ]" : @"" )];
+//        NSLog(@"%@",str);
+//    }
     
     
     // Now that we have the matrix all set up we need to get its inverse
