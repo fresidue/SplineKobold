@@ -1,9 +1,9 @@
 //
 //  SplineFitter.h
-//  UIKitty_2
+//  SplineKobold
 //
 //  Created by Fredrik Carlsson on 3/5/13.
-//  Copyright (c) 2013 Malmö Yrkeshögskola. All rights reserved.
+//  Released under MIT License.
 //
 
 @class Spline;

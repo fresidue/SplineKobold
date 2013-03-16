@@ -1,9 +1,9 @@
-/*
- * Kobold2D™ --- http://www.kobold2d.org
- *
- * Copyright (c) 2010-2011 Steffen Itterheim. 
- * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
- */
+//  HelloWorldLayer.h
+//  SplineKobold
+//
+//  Created by Fredrik Carlsson
+//  Released under MIT License.
+//
 
 #import "kobold2d.h"
 

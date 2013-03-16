@@ -1,9 +1,9 @@
 //
 //  spline_algebra.h
-//  SoundBarrier
+//  SplineKobold
 //
-//  Created by Fredrik Carlsson on 3/14/13.
-//  Copyright (c) 2013 Malmö Yrkeshögskola. All rights reserved.
+//  Created by Fredrik Carlsson on 3/5/13.
+//  Released under MIT License.
 //
 
 #ifndef SoundBarrier_spline_algebra_h

@@ -2,8 +2,8 @@
 //  SimpleSplineLayer.m
 //  SplineKobold
 //
-//  Created by Fredrik Carlsson on 3/14/13.
-//  Copyright (c) 2013 Malmö Yrkeshögskola. All rights reserved.
+//  Created by Fredrik Carlsson
+//  Released under MIT License.
 //
 
 #import "SimpleSplineLayer.h"
@@ -81,16 +81,6 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         
         winsize = [[CCDirector sharedDirector] winSize];
         effectiveSize = CGSizeMake(winsize.width-INSET_L-INSET_R, winsize.height-INSET_B-INSET_T);
-        
-        // initialize touch stuff
-//        touchedIndex = -1;
-//        touchedIndexBeingTouched = NO;
-//        touchedIndexBeingLongTouched = NO;
-//        touchedIndexMoved = NO;
-//        clickedIndex = -1;
-//        touchStartDate = [NSDate dateWithTimeIntervalSince1970:0];
-//        touchStartPoint = CGPointZero;
-//        clickedDate = [NSDate dateWithTimeIntervalSince1970:0];
         
         // add a dark red background
         CCSprite* redBack = [CCSprite spriteWithFile:IM_WHITE_PIXEL];
@@ -201,7 +191,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
     
     PointList* orderedPoints = [controlPoints orderedPoints];
     Spline* newSpline = [SplineFitter splineForPoints:orderedPoints andBoundaryConditions:bcType];
-    if ( newSpline ) {
+    if ( newSpline ) { // the new spline will be nil if any x-Coords in orderedPoints are the same. Degeenerate matrix.
         spline = newSpline;
     }
     
