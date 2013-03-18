@@ -138,7 +138,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         arrSelR.color = GRAY_C3;
         bcTypeNext = [CCMenuItemSprite itemWithNormalSprite:arrNorR selectedSprite:arrSelR target:self selector:@selector(topButtonPressed:)];
         bcTypeNext.anchorPoint = ccp(0.5,0.5);
-        bcTypeNext.position = ccp(290,winsize.height-25);
+        bcTypeNext.position = ccp(300,winsize.height-25);
         bcTypeNext.scale = BC_BUTT_SCALE;
         [topButtons addChild:bcTypeNext];
         CCSprite* arrNorL = [CCSprite spriteWithFile:IM_ARROW];
@@ -146,13 +146,13 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         arrSelL.color = GRAY_C3;
         bcTypePrev = [CCMenuItemSprite itemWithNormalSprite:arrNorL selectedSprite:arrSelL target:self selector:@selector(topButtonPressed:)];
         bcTypePrev.anchorPoint = ccp(0.5,0.5);
-        bcTypePrev.position = ccp(170,winsize.height-25);
+        bcTypePrev.position = ccp(160,winsize.height-25);
         bcTypePrev.rotation = 180;
         bcTypePrev.scale = BC_BUTT_SCALE;
         [topButtons addChild:bcTypePrev];
         
         numControlSpritesChanged = YES;
-        controlPoints = [PointList pointListWithCapacity:3];
+        controlPoints = [PointList pointListWithCapacity:5];
         [controlPoints addPoint:ccp(0,0)];
         [controlPoints addPoint:ccp(.2,.1)];
         [controlPoints addPoint:ccp(.5,.5)];
@@ -201,9 +201,23 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
     
     if ( sender == addButton ) {
         
-        float newXVal = minPt.x + CCRANDOM_0_1()*(maxPt.x-minPt.x);
-        float newYVal = [spline yForXVal:newXVal];
-        [controlPoints addPoint:ccp(newXVal,newYVal)];
+        int count = 0;
+        BOOL foundValidPt;
+        CGPoint newCP;
+        while ( !foundValidPt && count<15 ) {
+            float newXVal = minPt.x + CCRANDOM_0_1()*(maxPt.x-minPt.x);
+            float newYVal = [spline yForXVal:newXVal];
+            newCP = ccp(newXVal,newYVal);
+            if ( minPt.x < newXVal < maxPt.x && minPt.y < newYVal < maxPt.y ) {
+                foundValidPt = YES;
+            }
+            count += 1;
+        }
+        
+        newCP.x = MAX(minPt.x,MIN(maxPt.x,newCP.x));
+        newCP.y = MAX(minPt.y,MIN(maxPt.y,newCP.y));
+        // Insert the new point, but do not let it become one of the endpoints
+        [controlPoints insertPointAtIndex:([controlPoints numPoints]-1) withPoint:newCP];
         numControlSpritesChanged = YES;
         [self updatePoints];
     }
@@ -211,6 +225,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
     if ( currentControlSprite  &&  sender == delButton ) {
         [controlPoints deletePointAtIndex:currentControlSprite.tag];
         numControlSpritesChanged = YES;
+        delButton.isEnabled = NO;
         [self updatePoints];
     }
     
@@ -251,6 +266,12 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
     else if ( bcType == bc_endpointsSlope0 ) {
         bcStr = @"BC: slope 0";
     }
+    else if ( bcType == bc_leftSlope0rightCurve0 ) {
+        bcStr = @"BC: slp(L)=0 crv(R)=0";
+    }
+    else if ( bcType == bc_leftCurve0leftSlope0 ) {
+        bcStr = @"BC: crv(L)=0 slp(R)=0";
+    }
     else if ( bcType == bc_endpointsSlopeCurveHarmonic ) {
         bcStr = @"BC: harmonic";
     }
@@ -261,7 +282,7 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
         bcStr = @"BC: invalid";
     }
     
-    bcTypeLabel = [CCLabelTTF labelWithString:bcStr fontName:@"Marker Felt" fontSize:13];
+    bcTypeLabel = [CCLabelTTF labelWithString:bcStr fontName:@"Marker Felt" fontSize:12];
     bcTypeLabel.anchorPoint = ccp(0.5,1);
     bcTypeLabel.position = ccp(0.5*(bcTypePrev.position.x+bcTypeNext.position.x),winsize.height + LAB_Y_OFFSET);
     bcTypeLabel.color = ccWHITE;
@@ -351,7 +372,10 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
                 if ([child containsPoint:touchPt]) {
                     currentControlSprite = child;
                     currentControlSprite.color = YELLOW_C3;
-                    delButton.isEnabled = YES;
+                    
+                    BOOL enableDelButton = ( [controlPoints numPoints] > 3 );
+                    enableDelButton &= ( currentControlSprite.tag != 0 && currentControlSprite.tag != ([controlPoints numPoints]-1) );
+                    delButton.isEnabled = enableDelButton;
                     break;
                 }
             }
@@ -366,7 +390,12 @@ CGPoint curvePtFromScreenPoint(CGPoint scrPt, CGPoint minCrv, CGPoint maxCrv, CG
                 curvePt.x = min(curvePt.x, maxPt.x);
                 curvePt.y = max(curvePt.y, minPt.y);
                 curvePt.y = min(curvePt.y, maxPt.y);
-                currentControlSprite.position = touchPt;
+                if ( currentControlSprite.tag == 0 ) {
+                    curvePt.x = minPt.x;
+                }
+                if ( currentControlSprite.tag == ([controlPoints numPoints]-1) ) {
+                    curvePt.x = maxPt.x;
+                }
                 [controlPoints replacePointAtIndex:currentControlSprite.tag withPoint:curvePt];
                 
                 [self updatePoints];

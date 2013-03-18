@@ -128,6 +128,26 @@
             [splineMatrix replaceValue:2 row:matDim-1 column:matDim-3];
             break;
             
+        case bc_leftSlope0rightCurve0:
+            // For left endpoint 3*A*xˆ2 + 2*B*x + C = 0
+            [splineMatrix replaceValue:3*x2[0] row:matDim-2 column:0];
+            [splineMatrix replaceValue:2*xs[0] row:matDim-2 column:1];
+            [splineMatrix replaceValue:1 row:matDim-2 column:2];
+            // For right endpoint 6*A*x + 2*B = 0
+            [splineMatrix replaceValue:6*xs[numSegs] row:matDim-1 column:matDim-4];
+            [splineMatrix replaceValue:2 row:matDim-1 column:matDim-3];
+            break;
+            
+        case bc_leftCurve0leftSlope0:
+            // For left endpoint 6*A*x + 2*B = 0
+            [splineMatrix replaceValue:6*xs[0] row:matDim-2 column:0];
+            [splineMatrix replaceValue:2 row:matDim-2 column:1];
+            // For right endpoint 3*A*xˆ2 + 2*B*x + C = 0
+            [splineMatrix replaceValue:3*x2[numSegs] row:matDim-1 column:matDim-4];
+            [splineMatrix replaceValue:2*xs[numSegs] row:matDim-1 column:matDim-3];
+            [splineMatrix replaceValue:1 row:matDim-1 column:matDim-2];
+            break;
+
         case bc_endpointsSlopeCurveHarmonic:
             // 0 = first, 9=last
             
